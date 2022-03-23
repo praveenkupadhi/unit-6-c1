@@ -6,9 +6,7 @@ import {
 
 const initState = {
 	data: [],
-	filterData: [],
-	isLoading: false,
-	isError: false,
+	isLoading: true,
 };
 
 export const Reducer = (store = initState, action) => {

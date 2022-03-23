@@ -17,7 +17,6 @@ export const MoviesDashboard = () => {
 		axios
 			.get("https://movie-fake-server.herokuapp.com/data")
 			.then((res) => {
-				dispatch(loadingStatus(true));
 				dispatch(getMovieData(res.data));
 				dispatch(loadingStatus(false));
 			})
