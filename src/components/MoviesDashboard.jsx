@@ -8,8 +8,8 @@ const genres = ["Comedy", "Thriller", "Drama", "Documentary", "Children"];
 
 export const MoviesDashboard = () => {
 	// to get all movies list on component mounts
-	const data = useSelector((store) => store.data);
-	const isLoading = useSelector((store) => store.isLoading);
+	const data = useSelector((store) => store.movies.data);
+	const isLoading = useSelector((store) => store.movies.isLoading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
