@@ -27,20 +27,72 @@ export const MoviesDashboard = () => {
 	const handleFilter = (e) => {
 		// dispach filterby genre action to the store
 		if (e.target.value !== "select-genre") {
+			// const filterData = data.filter((item) => {
+			// 	return item.genre === e.target.value;
+			// });
+			// dispatch(loadingStatus(true));
+			// dispatch(getMovieData(filterData));
+			// dispatch(loadingStatus(false));
 			axios
 				.get(`https://movie-fake-server.herokuapp.com/data?q=${e.target.value}`)
 				.then((res) => {
+					dispatch(loadingStatus(true));
 					dispatch(getMovieData(res.data));
+					dispatch(loadingStatus(false));
 				});
 		} else {
 			axios.get(`https://movie-fake-server.herokuapp.com/data`).then((res) => {
+				dispatch(loadingStatus(true));
 				dispatch(getMovieData(res.data));
+				dispatch(loadingStatus(false));
 			});
 		}
 	};
+
+	//sort A-Z
+	const sortAscending = () => {
+		const sortData = data.sort((a, b) => {
+			const movieNameA = a.movie_name.toUpperCase(); // ignore upper and lowercase
+			const movieNameB = b.movie_name.toUpperCase(); // ignore upper and lowercase
+			if (movieNameA < movieNameB) {
+				return -1;
+			}
+			if (movieNameA > movieNameB) {
+				return 1;
+			}
+			return 0;
+		});
+		// console.log(sortData);
+		dispatch(loadingStatus(true));
+		dispatch(getMovieData(sortData));
+		dispatch(loadingStatus(false));
+	};
+
+	const sortDescending = () => {
+		let sortData = data.sort((a, b) => {
+			const movieNameA = a.movie_name.toUpperCase(); // ignore upper and lowercase
+			const movieNameB = b.movie_name.toUpperCase(); // ignore upper and lowercase
+			if (movieNameA > movieNameB) {
+				return -1;
+			}
+			if (movieNameA < movieNameB) {
+				return 1;
+			}
+			return 0;
+		});
+		// console.log(sortData);
+		dispatch(loadingStatus(true));
+		dispatch(getMovieData(sortData));
+		dispatch(loadingStatus(false));
+	};
+
 	return (
 		<>
 			<h2>Movies</h2>
+			<div>
+				<button onClick={sortAscending}>Sort A-Z</button>
+				<button onClick={sortDescending}>Sort Z-A</button>
+			</div>
 			<select onChange={handleFilter}>
 				<option value="select-genre">--Select Genre--</option>
 				{genres.map((e, i) => (
